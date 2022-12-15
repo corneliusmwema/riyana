@@ -1,0 +1,16 @@
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/registration/RegistrationService.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/registration/RegistrationController.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/registration/token/ConfirmationTokenService.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/email/EmailSender.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/registration/EmailValidator.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/RegistrationApplication.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/appuser/AppUserRole.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/registration/token/ConfirmationToken.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/registration/RegistrationRequest.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/appuser/AppUserService.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/security/config/WebSecurityConfig.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/registration/token/ConfirmationTokenRepository.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/email/EmailService.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/security/PasswordEncoder.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/appuser/AppUser.java
+/home/cornelius/Desktop/codes/registration/src/main/java/com/example/registration/appuser/AppUserRepository.java

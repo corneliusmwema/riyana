@@ -1,0 +1,3 @@
+com/example/registration/RegistrationApplication.class
+com/example/registration/security/PasswordEncoder.class
+com/example/registration/security/config/WebSecurityConfig.class

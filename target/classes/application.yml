@@ -1,0 +1,81 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+#  Configurations to enable https using ssl.
+  port: 8443
+  ssl:
+    enabled: true
+    key-alias: local_ssl
+    key-store: src/main/resources/local-ssl.p12
+    key-store-type: PKCS12
+    key-password: 123456789
+    key-store-password: 123456789
+
+spring:
+  datasource:
+#    username: ydwexpvmdhsxpo
+#    password: 8bbd65bee70db7ded259fc61be020dab668d918482abc67373c7add10b1bec3b
+#    url: jdbc:postgresql://ec2-18-215-41-121.compute-1.amazonaws.com:5432/d112tsggjivjcn
+
+    username: postgres
+    password: root
+    url: jdbc:postgresql://localhost:5432/jwt
+
+    initialization-node: always
+    initialize: true
+    continue-on-error: true
+    hikari:
+      auto-commit: false
+    driver-class-name: org.postgresql.Driver
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 329424933201-ufh28g89800efc380s1hno8m5f9e8h14.apps.googleusercontent.com
+            clientSecret: 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
+            scope:
+              - email
+              - profile
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: cornelstarlon@gmail.com
+    password: jinuvczdwpdhoozi
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+twilio:
+  account_sid: ACac7e59f6f8cf6f65b9e610c228c27a24
+  auth_token: 50be0c829c67df350f73e10d61b7bc26
+  trial_number: +12138982047
+
+
+app:
+  cors:
+    allowedOrigins: http://localhost:3000,http://localhost:4200
+  oauth2:
+    # After successfully authenticating with the OAuth2 Provider,
+    # we'll be generating an auth token for the user and sending the token to the
+    # redirectUri mentioned by the client in the /oauth2/authorize request.
+    # We're not using cookies because they won't work well in mobile clients.
+    authorizedRedirectUris:
+      - http://localhost:3000/oauth2/redirect
+      - myandroidapp://oauth2/redirect
