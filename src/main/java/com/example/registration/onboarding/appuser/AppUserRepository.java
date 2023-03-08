@@ -10,19 +10,16 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public interface AppUserRepository
-        extends JpaRepository<AppUser, Long> {
-
-    @Query("SELECT user FROM AppUser user WHERE user.email=?1")
-    AppUser findByEmail(String email);
+public interface AppUserRepository extends JpaRepository<AppUser, Long> {
+    AppUser findByPhone(String phone);
 
     @Override
     List<AppUser> findAll();
 
+
     @Transactional
     @Modifying
     @Query("UPDATE AppUser a " +
-            "SET a.enabled = TRUE WHERE a.email = ?1")
-    int enableAppUser(String email);
-
+            "SET a.enabled = TRUE WHERE a.phone = ?1")
+    int enableUserFarmer(String phone);
 }

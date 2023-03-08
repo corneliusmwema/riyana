@@ -1,9 +1,8 @@
 package com.example.registration.onboarding.appuser;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,51 +11,44 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
-
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 @NoArgsConstructor
+@ToString
 @Entity
+@Table(name = "user_id", uniqueConstraints = {@UniqueConstraint(columnNames = "telephone",
+        name = "user_phone_unique")})
 public class AppUser implements UserDetails {
     @SequenceGenerator(
-            name = "user_app_user_sequence",
-            sequenceName = "user_app_user_sequence",
+            name = "user_sequence",
+            sequenceName = "user_sequence",
             allocationSize = 1
     )
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "user_app_user_sequence"
+            generator = "user_sequence"
     )
     private Long id;
-    @Column(nullable = false)
+    @Column(name= "nickname", nullable = false)
     private String userName;
-    @Column(nullable = false)
-    private String email;
-    @Column(nullable = false)
+    @Column(name= "telephone", nullable = false)
+    private String phone;
+    @Column(name= "password", nullable = false)
     private String password;
-    @Transient
-    private String confirmPassword;
-
-
     @Enumerated(EnumType.STRING)
     private Roles roles;
     private Boolean locked = false;
     private Boolean enabled = false;
 
-    public AppUser(String userName,
-                   String email,
-                   String password,
-                   String confirmPassword,
-                   Roles roles) {
+    //TODO: ENSURE YOU USE THE ACCOUNT LOCKED AND ENABLED FEATURES
+    //TODO: USE TWILIO TO SEND OTP TO PHONE NUMBER FOR MOBILE
+
+    public AppUser(String userName, String phone, String password, Roles roles) {
         this.userName = userName;
-        this.email = email;
+        this.phone = phone;
         this.password = password;
-        this.confirmPassword = confirmPassword;
         this.roles = roles;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -65,20 +57,14 @@ public class AppUser implements UserDetails {
         return Collections.singletonList(authority);
     }
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public String getConfirmPassword(){return confirmPassword;}
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
 
     public String getUserName() {
         return userName;
+    }
+
+    @Override
+    public String getUsername() {
+        return phone;
     }
 
     @Override
@@ -100,4 +86,4 @@ public class AppUser implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
-}
+   }

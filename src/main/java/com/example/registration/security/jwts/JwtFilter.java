@@ -1,7 +1,6 @@
 package com.example.registration.security.jwts;
 
 import com.example.registration.onboarding.appuser.AppUserService;
-import com.example.registration.onboarding.appuser.UserFarmerService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,12 +18,13 @@ import java.io.IOException;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
-    @Autowired
     private JwtUtil jwtUtil;
-    @Autowired
     private AppUserService appUserService;
-    @Autowired
-    private UserFarmerService userFarmerService;
+    public JwtFilter(JwtUtil jwtUtil, AppUserService appUserService) {
+        this.jwtUtil = jwtUtil;
+        this.appUserService = appUserService;
+    }
+
     Claims claims = null;
     private String username = null;
 
@@ -39,7 +39,7 @@ public class JwtFilter extends OncePerRequestFilter {
             username = jwtUtil.extractUsername(token);
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userFarmerService.loadUserByUsername(username);
+            UserDetails userDetails = appUserService.loadUserByUsername(username);
             if (userDetails==null){
                 userDetails = appUserService.loadUserByUsername(username);
             }

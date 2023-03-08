@@ -3,7 +3,7 @@ package com.example.registration.cart.service;
 import com.example.registration.cart.exception.AuthenticationFailedException;
 import com.example.registration.cart.model.AuthenticationToken;
 import com.example.registration.cart.repository.TokenRepository;
-import com.example.registration.onboarding.appuser.UserFarmer;
+import com.example.registration.onboarding.appuser.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +17,10 @@ public class AuthenticationService {
         tokenRepository.save(authenticationToken);
     }
 
-    public AuthenticationToken getToken(UserFarmer user) {
+    public AuthenticationToken getToken(AppUser user) {
         return tokenRepository.findByUser(user);
     }
-    public UserFarmer getUser(String token){
+    public AppUser getUser(String token){
         final AuthenticationToken authenticationToken = tokenRepository.findByToken(token);
         if(Objects.isNull(authenticationToken))
             return null;

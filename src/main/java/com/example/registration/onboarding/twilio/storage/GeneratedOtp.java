@@ -1,6 +1,6 @@
 package com.example.registration.onboarding.twilio.storage;
 
-import com.example.registration.onboarding.appuser.UserFarmer;
+import com.example.registration.onboarding.appuser.AppUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,14 +40,14 @@ public class GeneratedOtp {
     @ManyToOne
     @JoinColumn(
             nullable = false,
-            name = "user_farmer_id"
+            name = "user_id"
     )
-    private UserFarmer userFarmer;
+    private AppUser appUser;
 
-    public GeneratedOtp(String otp, LocalDateTime createdAt, LocalDateTime expiresAt, UserFarmer userFarmer) {
+    public GeneratedOtp(String otp, LocalDateTime createdAt, LocalDateTime expiresAt, AppUser appUser) {
         this.otp = otp;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
-        this.userFarmer = userFarmer;
+        this.appUser = appUser;
     }
 }

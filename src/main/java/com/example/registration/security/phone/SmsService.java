@@ -20,8 +20,8 @@ public class SmsService implements SmsSender {
     public void sendSms(String recipient, String sms) {
         PhoneNumber to = new PhoneNumber(recipient);
         PhoneNumber from = new PhoneNumber(twilioConfiguration.getTrialNumber());
-        MessageCreator creator = Message.creator(to, from, "Use verification code "+sms+" for Shamba App authentication.");
+        MessageCreator creator = Message.creator(to, from, "Use verification code "+sms+" for Riyana App authentication.");
         creator.create();
-        LOGGER.info("Send sms {}",sms);
+        LOGGER.info("Your OTP is: {}",sms);
     }
 }

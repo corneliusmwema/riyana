@@ -3,7 +3,7 @@ package com.example.registration.cart.service;
 import com.example.registration.cart.dto.ProductDto;
 import com.example.registration.cart.model.WishList;
 import com.example.registration.cart.repository.WishListRepository;
-import com.example.registration.onboarding.appuser.UserFarmer;
+import com.example.registration.onboarding.appuser.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class WishListService {
         return wishListRepository.save(wishList);
     }
 
-    public List<ProductDto> getWishListForUser(UserFarmer user) {
+    public List<ProductDto> getWishListForUser(AppUser user) {
         final List<WishList> wishLists = wishListRepository.findAllByUserOrderByCreatedDateDesc(user);
         List<ProductDto> productDtos = new ArrayList<>();
         for(WishList wishList: wishLists){

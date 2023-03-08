@@ -9,7 +9,7 @@ import com.example.registration.cart.model.Cart;
 import com.example.registration.cart.model.Product;
 import com.example.registration.cart.repository.CartRepository;
 import com.example.registration.cart.repository.ProductRepository;
-import com.example.registration.onboarding.appuser.UserFarmer;
+import com.example.registration.onboarding.appuser.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ public class CartService {
     private final ProductRepository productRepository;
     public Cart addToCart(@NotNull CartDto cartDto, String token) {
         authenticationService.authenticate(token);
-        UserFarmer user = authenticationService.getUser(token);
+        AppUser user = authenticationService.getUser(token);
         Product product = productRepository.findById(cartDto.getProductId())
                 .orElseThrow(()->new ProductNotExistException("Product is not valid " + cartDto.getProductId()));
         Cart cart = new Cart();
@@ -39,11 +39,11 @@ public class CartService {
 
     public CartResponseDto getAllItemsFromCart(String token) {
         authenticationService.authenticate(token);
-        UserFarmer user = authenticationService.getUser(token);
+        AppUser user = authenticationService.getUser(token);
         return this.listCartItems(user);
     }
 
-    private CartResponseDto listCartItems(UserFarmer user) {
+    private CartResponseDto listCartItems(AppUser user) {
         final List<Cart> cartList = cartRepository.findAllByUserOrderByCreatedDateDesc(user);
         List<CartItemDto> cartItems = new ArrayList<>();
         Double totalCost =0D;
@@ -64,7 +64,7 @@ public class CartService {
 
     public Cart deleteCartItem(String cartItemId, String token) {
         authenticationService.authenticate(token);
-        UserFarmer user = authenticationService.getUser(token);
+        AppUser user = authenticationService.getUser(token);
         Cart cart = cartRepository.findById(Integer.parseInt(cartItemId))
                 .orElseThrow(() -> new CustomException("Cart item with id: " + cartItemId + " is not valid"));
         if(cart.getUser() != user)

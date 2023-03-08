@@ -1,6 +1,6 @@
 package com.example.registration.cart.model;
 
-import com.example.registration.onboarding.appuser.UserFarmer;
+import com.example.registration.onboarding.appuser.AppUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,11 +20,11 @@ public class AuthenticationToken {
     private Integer id;
     private String token;
     private Date createdDate;
-    @OneToOne(targetEntity = UserFarmer.class, fetch = FetchType.LAZY)
+    @OneToOne(targetEntity = AppUser.class, fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "user_id")
-    private UserFarmer user;
+    private AppUser user;
 
-    public AuthenticationToken(UserFarmer user) {
+    public AuthenticationToken(AppUser user) {
         this.user = user;
         this.createdDate = new Date();
         this.token = UUID.randomUUID().toString();

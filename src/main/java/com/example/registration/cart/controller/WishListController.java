@@ -5,7 +5,7 @@ import com.example.registration.cart.model.Product;
 import com.example.registration.cart.model.WishList;
 import com.example.registration.cart.service.AuthenticationService;
 import com.example.registration.cart.service.WishListService;
-import com.example.registration.onboarding.appuser.UserFarmer;
+import com.example.registration.onboarding.appuser.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class WishListController {
     @PostMapping("/add")
     public ResponseEntity<WishList> addToWishList(@RequestBody Product product, @RequestParam("token") String token){
         authenticationService.authenticate(token);
-        UserFarmer user = authenticationService.getUser(token);
+        AppUser user = authenticationService.getUser(token);
         WishList wishList = new WishList();
         wishList.setUser(user);
         wishList.setProduct(product);
@@ -35,7 +35,7 @@ public class WishListController {
     @GetMapping("/{token}")
     public ResponseEntity<List<ProductDto>> getWishList(@PathVariable String token){
         authenticationService.authenticate(token);
-        UserFarmer user = authenticationService.getUser(token);
+        AppUser user = authenticationService.getUser(token);
         return new ResponseEntity<>(wishListService.getWishListForUser(user), HttpStatus.OK);
     }
 }

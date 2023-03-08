@@ -2,8 +2,6 @@ package com.example.registration.onboarding.signup;
 
 import com.example.registration.onboarding.appuser.AppUser;
 import com.example.registration.onboarding.appuser.AppUserRepository;
-import com.example.registration.onboarding.appuser.UserFarmer;
-import com.example.registration.onboarding.appuser.UserFarmerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +14,6 @@ public class RegistrationController {
 
     private final RegistrationService registrationService;
     private final AppUserRepository appUserRepository;
-    private final UserFarmerRepository userFarmerRepository;
-
 
     @GetMapping("usersByEmail")
     public List<AppUser> getUsers(){
@@ -29,24 +25,12 @@ public class RegistrationController {
         appUserRepository.findById(id);
         return "User with ID " + id + " does not exist.";
     }
-
-    @PostMapping("email")
-    public String register(@RequestBody RegistrationRequest request) {
-
-        return registrationService.register(request);
-    }
-
-    @PostMapping(path = "email/confirm")
-    public String confirm(@RequestParam("OTP") String token) {
-        return registrationService.confirmToken(token);
-    }
-
     @GetMapping("usersByPhone")
-    public List<UserFarmer> getUsersPhone(){ return userFarmerRepository.findAll(); }
+    public List<AppUser> getUsersPhone(){ return appUserRepository.findAll(); }
 
     @GetMapping("UserByIdPhone")
     public String getUserByIdPhone(@RequestParam Long id) {
-        userFarmerRepository.findById(id);
+        appUserRepository.findById(id);
         return "User with ID " + id + " does not exist.";
     }
 
@@ -65,7 +49,4 @@ public class RegistrationController {
     public String confirmPhone(@RequestParam("OTP") String otp){
         return registrationService.confirmOtp(otp);
     }
-
-
-
 }

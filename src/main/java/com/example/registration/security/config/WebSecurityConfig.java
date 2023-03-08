@@ -1,7 +1,6 @@
 package com.example.registration.security.config;
 
 import com.example.registration.onboarding.appuser.AppUserService;
-import com.example.registration.onboarding.appuser.UserFarmerService;
 import com.example.registration.security.PasswordEncoder;
 import com.example.registration.security.jwts.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,20 +20,16 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    AppUserService service;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    UserFarmerService userFarmerService;
+    AppUserService appUserService;
     @Autowired
     private JwtFilter jwtFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(service).passwordEncoder(passwordEncoder.bCryptPasswordEncoder());
-        auth.userDetailsService(userFarmerService).passwordEncoder(passwordEncoder.bCryptPasswordEncoder());
+        auth.userDetailsService(appUserService).passwordEncoder(passwordEncoder.bCryptPasswordEncoder());
     }
 
     @Override
@@ -44,20 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // disable sessions
 
         http.authorizeRequests()
-                .antMatchers("/signup/**",
-                        "/forgotpassword/**",
-                        "/signout",
-                        "/chat",
-                        "/login/**","/v3/api-docs/**",
-                        "/swagger-ui.html",
-                        "/swagger-ui/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();
-//                .and()
-//                .logout()
-//                .invalidateHttpSession(true)
-//                .clearAuthentication(true)
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-
 
         http.exceptionHandling()
                 .authenticationEntryPoint(

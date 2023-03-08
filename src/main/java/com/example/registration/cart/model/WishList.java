@@ -1,6 +1,6 @@
 package com.example.registration.cart.model;
 
-import com.example.registration.onboarding.appuser.UserFarmer;
+import com.example.registration.onboarding.appuser.AppUser;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,10 +18,10 @@ public class WishList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @OneToOne(targetEntity = UserFarmer.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = AppUser.class, fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     @JoinColumn(name = "user_id")
-    private UserFarmer user;
+    private AppUser user;
     private Date createdDate;
     @ManyToOne
     @JoinColumn(name = "product_id")

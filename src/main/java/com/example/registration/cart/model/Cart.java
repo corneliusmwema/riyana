@@ -1,6 +1,6 @@
 package com.example.registration.cart.model;
 
-import com.example.registration.onboarding.appuser.UserFarmer;
+import com.example.registration.onboarding.appuser.AppUser;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +27,6 @@ public class Cart {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
-    private UserFarmer user;
+    private AppUser user;
     private Integer quantity;
 }

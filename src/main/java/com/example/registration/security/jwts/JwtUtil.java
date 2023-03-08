@@ -1,10 +1,8 @@
 package com.example.registration.security.jwts;
 //code to generate and validate token
-import com.example.registration.onboarding.signout.LogoutTokenServiceImp;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +15,6 @@ import java.util.function.Function;
 public class JwtUtil {
 
     private String secret = "12345678901234567890";
-    @Autowired
-    private LogoutTokenServiceImp logoutTokenServiceImp;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -66,11 +62,6 @@ public class JwtUtil {
     //First check if the token is present in the logout tokens list, if it exists, then token is invalid
     //If token is still valid then get user name from token and check if it is same as in user details and the token is not expired
     public Boolean validateToken(String token, UserDetails userDetails) {
-//        final String username = extractUsername(token);
-//        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-        if (logoutTokenServiceImp.checkIfTokenExists(token)) {
-            return false;
-        }
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }

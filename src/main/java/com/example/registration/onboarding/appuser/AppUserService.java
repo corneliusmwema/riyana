@@ -1,7 +1,7 @@
 package com.example.registration.onboarding.appuser;
 
-import com.example.registration.onboarding.signup.token.ConfirmationToken;
-import com.example.registration.onboarding.signup.token.ConfirmationTokenService;
+import com.example.registration.onboarding.twilio.storage.GeneratedOtp;
+import com.example.registration.onboarding.twilio.storage.GeneratedOtpService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,21 +17,18 @@ import java.util.Random;
 
 @Service
 @AllArgsConstructor
-public class AppUserService implements UserDetailsService {
-
+public class AppUserService implements UserDetailsService{
     private final static String USER_NOT_FOUND_MSG =
             "user with email %s not found";
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final ConfirmationTokenService confirmationTokenService;
-
-
+    private final GeneratedOtpService generatedOtpService;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        AppUser user = appUserRepository.findByEmail(email);
+    public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
+        AppUser user = appUserRepository.findByPhone(phone);
         if(user==null){
-        throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email));
+            throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, phone));
         }
         return new User(user.getUsername(), user.getPassword(), user.getAuthorities());
     }
@@ -39,9 +36,9 @@ public class AppUserService implements UserDetailsService {
 
 
     public String signUpUser(AppUser appUser) throws EntityExistsException {
-        AppUser userExists = appUserRepository.findByEmail(appUser.getEmail());
+        AppUser userExists = appUserRepository.findByPhone(appUser.getPhone());
 
-        if (userExists!=null) { throw new IllegalStateException("email already taken"); }
+        if (userExists!=null) { throw new IllegalStateException("phone number already taken"); }
 
         String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
 
@@ -49,34 +46,26 @@ public class AppUserService implements UserDetailsService {
 
         appUserRepository.save(appUser);
 
-        String token = generateOTP();
+        String otp = generateOTP();
 
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
+        GeneratedOtp generatedOtp = new GeneratedOtp(
+                otp,
                 LocalDateTime.now(),
                 LocalDateTime.now().plusMinutes(2),
                 appUser
         );
 
-        confirmationTokenService.saveConfirmationToken(
-                confirmationToken);
+        generatedOtpService.saveGeneratedOtp(generatedOtp);
 
-//        TODO: SEND EMAIL
+//        TODO: SEND SMS
 
-        return token;
+        return otp;
     }
 
-    public String generateOTP(){
-        return new DecimalFormat("000000")
-                .format(new Random().nextInt(999999));
-    }
+    public String generateOTP(){ return new DecimalFormat("000000").format(new Random().nextInt(999999));}
 
-    public int enableAppUser(String email) {
-        return appUserRepository.enableAppUser(email);
+    public int enableUserFarmer(String phone) {
+        return appUserRepository.enableUserFarmer(phone);
     }
-
-//    public void changeUserPassword(String password, String phone){
-//        appUserRepository.changeUserPassword(password, phone);
-//    }
 
 }

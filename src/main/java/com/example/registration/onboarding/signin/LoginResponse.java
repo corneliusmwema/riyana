@@ -2,9 +2,6 @@ package com.example.registration.onboarding.signin;
 
 public class LoginResponse {
 	private String accessToken;
-
-
-
 	public LoginResponse(String accessToken) {
 		this.accessToken = accessToken;
 	}

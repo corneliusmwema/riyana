@@ -14,32 +14,13 @@ server:
 
 spring:
   datasource:
-#    username: ydwexpvmdhsxpo
-#    password: 8bbd65bee70db7ded259fc61be020dab668d918482abc67373c7add10b1bec3b
-#    url: jdbc:postgresql://ec2-18-215-41-121.compute-1.amazonaws.com:5432/d112tsggjivjcn
-
-    username: postgres
-    password: root
-    url: jdbc:postgresql://localhost:5432/jwt
-
+    url: jdbc:postgresql://db.ilgjiculkrtnywqiztoj.supabase.co:5432/postgres?user=postgres&password=ajwpnnbRk7dhCf1K
     initialization-node: always
     initialize: true
     continue-on-error: true
     hikari:
       auto-commit: false
     driver-class-name: org.postgresql.Driver
-
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            clientId: 329424933201-ufh28g89800efc380s1hno8m5f9e8h14.apps.googleusercontent.com
-            clientSecret: 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
-            scope:
-              - email
-              - profile
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -49,33 +30,11 @@ spring:
         format_sql: true
     show-sql: true
 
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: cornelstarlon@gmail.com
-    password: jinuvczdwpdhoozi
-
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-
 twilio:
-  account_sid: ACac7e59f6f8cf6f65b9e610c228c27a24
-  auth_token: 50be0c829c67df350f73e10d61b7bc26
-  trial_number: +12138982047
-
+  account_sid: AC2726140bbb99237dba98a5b9a9a9576f
+  auth_token: 959a3c73c7c8e2e5a816d0037d0c1e11
+  trial_number: +17246183905
 
 app:
   cors:
     allowedOrigins: http://localhost:3000,http://localhost:4200
-  oauth2:
-    # After successfully authenticating with the OAuth2 Provider,
-    # we'll be generating an auth token for the user and sending the token to the
-    # redirectUri mentioned by the client in the /oauth2/authorize request.
-    # We're not using cookies because they won't work well in mobile clients.
-    authorizedRedirectUris:
-      - http://localhost:3000/oauth2/redirect
-      - myandroidapp://oauth2/redirect
