@@ -2,16 +2,6 @@ server:
   error:
     include-message: always
     include-binding-errors: always
-#  Configurations to enable https using ssl.
-  port: 8443
-#  ssl:
-#    enabled: true
-#    key-alias: local_ssl
-#    key-store: src/main/resources/local-ssl.p12
-#    key-store-type: PKCS12
-#    key-password: 123456789
-#    key-store-password: 123456789
-
 spring:
   datasource:
     url: jdbc:postgresql://db.ilgjiculkrtnywqiztoj.supabase.co:5432/postgres?user=postgres&password=ajwpnnbRk7dhCf1K
@@ -23,7 +13,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
